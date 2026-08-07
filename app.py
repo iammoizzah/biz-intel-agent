@@ -11,14 +11,16 @@ from config.market_context import MARKETS, DEFAULT_MARKET, get_market
 from agents.orchestrator import run_pipeline
 from tools.pdf_export import build_report_pdf
 
-st.set_page_config(page_title="Business Intelligence Agent", page_icon="📊", layout="wide")
+st.set_page_config(page_title="Business Intelligence Agent",
+                   layout="wide")
 
 # --- Sidebar: market + about ---
 with st.sidebar:
-    st.title("📊 BI Agent")
+    st.title(" BI Agent")
     st.caption("Multi-agent business intelligence, localized to your market.")
 
-    market_name = st.selectbox("Market", list(MARKETS.keys()), index=list(MARKETS.keys()).index(DEFAULT_MARKET))
+    market_name = st.selectbox("Market", list(
+        MARKETS.keys()), index=list(MARKETS.keys()).index(DEFAULT_MARKET))
     market = get_market(market_name)
 
     st.divider()
@@ -34,7 +36,8 @@ with st.sidebar:
 
 # --- Main ---
 st.title("Business Intelligence Agent")
-st.caption(f"Currently configured for: **{market.region}** ({', '.join(market.languages).upper()})")
+st.caption(
+    f"Currently configured for: **{market.region}** ({', '.join(market.languages).upper()})")
 
 question = st.text_area(
     "Describe your business problem or question",
@@ -48,10 +51,12 @@ uploaded = st.file_uploader(
     accept_multiple_files=True,
 )
 
-run_clicked = st.button("Analyze", type="primary", disabled=not question.strip())
+run_clicked = st.button("Analyze", type="primary",
+                        disabled=not question.strip())
 
 if run_clicked:
-    files = [{"filename": f.name, "bytes": f.getvalue()} for f in (uploaded or [])]
+    files = [{"filename": f.name, "bytes": f.getvalue()}
+             for f in (uploaded or [])]
 
     status_box = st.empty()
 
@@ -60,7 +65,8 @@ if run_clicked:
 
     with st.spinner("Running agents..."):
         try:
-            result = run_pipeline(question, market, files, progress_callback=progress)
+            result = run_pipeline(question, market, files,
+                                  progress_callback=progress)
         except Exception as e:
             st.error(f"Something went wrong: {e}")
             st.stop()
@@ -88,6 +94,7 @@ if run_clicked:
             output_path=pdf_path,
         )
         with open(pdf_path, "rb") as f:
-            st.download_button("Download PDF report", f, file_name="business_report.pdf", mime="application/pdf")
+            st.download_button(
+                "Download PDF report", f, file_name="business_report.pdf", mime="application/pdf")
     except Exception as e:
         st.warning(f"Report generated, but PDF export failed: {e}")
