@@ -5,8 +5,6 @@
 A multi-agent system that answers SMB owners' business questions with
 grounded, localized, actionable reports — bilingual by default.
 
-Built as the phase-3 capstone for an agentic engineering track (Hugging
-Face agents course → applied to a real, deployable product).
 
 ## Why this exists
 
@@ -97,3 +95,4 @@ streamlit run app.py
 
 Free-tier deployable on Streamlit Community Cloud: connect this repo,
 set `ANTHROPIC_API_KEY` in the app's secrets, done.
+
